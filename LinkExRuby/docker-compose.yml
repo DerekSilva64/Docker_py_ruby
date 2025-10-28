@@ -1,0 +1,31 @@
+
+
+services:
+  api:
+    image: linkextractor-api:step6-ruby
+    build: ./api
+    ports:
+      - "4567:4567"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./logs:/app/logs
+  web:
+    image: linkextractor-web:step6-php
+    build: ./www
+    ports:
+      - "80:80"
+    environment:
+      - API_ENDPOINT=http://api:4567/api/
+  redis:
+    image: redis
+  locust:
+    image: locustio/locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./locust:/mnt/locust
+    command: -f /mnt/locust/locustfile.py --host http://web:80
+    depends_on:
+      - web
+      - api

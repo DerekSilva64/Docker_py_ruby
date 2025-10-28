@@ -1,0 +1,36 @@
+services:
+  api:
+    image: linkextractor-api:step5-python
+    build: ./api
+    ports:
+      - "5000:5000"
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+  web:
+    image: linkextractor-web:step5-php
+    build: ./www
+    ports:
+      - "80:80"
+    environment:
+      # Use plain HTTP to contact the Flask API (the api service is not
+      # configured for TLS). Sending HTTPS/TLS bytes to the Flask HTTP
+      # server caused the "Bad request version ('À(À$...')" errors.
+      - API_ENDPOINT=http://api:5000/api/
+    depends_on:
+      - api
+  redis:
+    image: redis
+  
+  locust:
+    image: linkextractor-locust
+    build: ./locust
+    ports:
+      - "8089:8089"  # Interface web do Locust
+    volumes:
+      - ./locust:/mnt/locust
+      - ./locust/test_results:/mnt/locust/test_results
+    working_dir: /mnt/locust
+    depends_on:
+      - web

@@ -1,0 +1,2 @@
+# Enforce LF for Python files to avoid CRLF shebang issues on Unix-like systems
+*.py text eol=lf
