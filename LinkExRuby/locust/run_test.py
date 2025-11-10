@@ -67,7 +67,7 @@ def run_load_test(duration_seconds=60, users=50):
 if __name__ == "__main__":
     # Parâmetros do teste
     DURATION = 60    # 1 minuto
-    USERS = 50       # 50 usuários simultâneos
+    USERS = 100       # 50 usuários simultâneos
     
     run_load_test(
         duration_seconds=DURATION,

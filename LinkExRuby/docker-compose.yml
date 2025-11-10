@@ -19,6 +19,7 @@ services:
       - API_ENDPOINT=http://api:4567/api/
   redis:
     image: redis
+    command: redis-server --save "" --appendonly no
   locust:
     image: locustio/locust
     ports:

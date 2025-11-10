@@ -5,7 +5,7 @@ import os
 import signal
 import sys
 
-def run_load_test(duration_seconds=60, users=50):
+def run_load_test(duration_seconds=60, users=10):
     """
     Executa o teste de carga com o Locust via linha de comando
     
@@ -65,7 +65,7 @@ def run_load_test(duration_seconds=60, users=50):
 if __name__ == "__main__":
     # Parâmetros do teste
     DURATION = 60    # 1 minuto
-    USERS = 100       # 50 usuários simultâneos
+    USERS = 50       # 50 usuários simultâneos
     
     run_load_test(
         duration_seconds=DURATION,
